@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Resource {
+  id            String   @id @default(uuid())
+  title         String
+  subtitle      String?
+  coverUrl      String?
+  description   String?
+  category      String   // MOVIE, SERIES, ANIME, SHORT
+  tags          String   @default("[]")
+  region        String?
+  year          Int?
+  rating        Float?
+  status        String   @default("COMPLETED") // ONGOING, COMPLETED
+  resourceName  String?
+  resourceUrl   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([category])
+  @@index([status])
+  @@index([year])
+}
